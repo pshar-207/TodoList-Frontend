@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
+const VITE_LOCALHOST_API_URL = import.meta.env.VITE_LOCALHOST_API_URL;
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import Home from "../components/Home/Home";
 import UserDetails from "../components/UserDetails/UserDetails";
@@ -8,10 +10,9 @@ import TodoCard from "../components/TodoCard/TodoCard";
 import CreateTask from "../components/CreateTask/CreateTask";
 
 const App = () => {
-  // const [user, setUser] = useState(
-  //   JSON.parse(localStorage.getItem("user")) || null
-  // );
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
   const [taskLists, setTaskLists] = useState([]);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [showUserDetails, setShowUserDetails] = useState(false);
@@ -28,7 +29,8 @@ const App = () => {
   const fetchTaskLists = async () => {
     try {
       const response = await axios.get(
-        `https://todo-list-backend-production-72ea.up.railway.app/api/tasks?userId=${user._id}`
+        `${VITE_LOCALHOST_API_URL}/api/getAllTasks?userId=${user._id}`
+        // `${VITE_API_URL}/api/getAllTasks?userId=${user._id}`
       );
       setTaskLists(response.data.tasks);
     } catch (error) {
@@ -56,11 +58,13 @@ const App = () => {
       {user && showUserDetails && <UserDetails user={user} setUser={setUser} />}
 
       {user &&
-        taskLists.map((list) => (
+        taskLists.map((list, index) => (
           <TodoCard
             key={list._id}
+            index={index}
             taskList={list}
-            refreshTaskLists={fetchTaskLists}
+            tasklists={taskLists}
+            setTaskLists={setTaskLists}
           />
         ))}
 
@@ -68,7 +72,11 @@ const App = () => {
         <button onClick={() => setShowCreateTask(!showCreateTask)}>+</button>
       )}
       {showCreateTask && user && (
-        <CreateTask userId={user._id} refreshTasks={fetchTaskLists} />
+        <CreateTask
+          userId={user._id}
+          taskLists={taskLists}
+          fetchTaskLists={fetchTaskLists}
+        />
       )}
     </>
   );

@@ -1,6 +1,8 @@
 import React from "react";
 import { signInWithGoogle } from "../../src/firebase";
 import axios from "axios";
+const VITE_LOCALHOST_API_URL = import.meta.env.VITE_LOCALHOST_API_URL;
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const Home = ({ setUser }) => {
   const handleLogin = async () => {
@@ -8,7 +10,8 @@ const Home = ({ setUser }) => {
     if (firebaseUser) {
       try {
         const response = await axios.post(
-          "https://todo-list-backend-production-72ea.up.railway.app/api/users",
+          `${VITE_LOCALHOST_API_URL}/api/createUser`,
+          // `${VITE_API_URL}/api/createUser`,
           {
             displayName: firebaseUser.displayName,
             email: firebaseUser.email,
@@ -26,7 +29,7 @@ const Home = ({ setUser }) => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Welcome to the App</h2>
+      <h2>Welcome to the Todo App</h2>
       <button onClick={handleLogin}>Sign in with Google</button>
     </div>
   );

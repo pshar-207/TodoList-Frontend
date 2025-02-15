@@ -1,10 +1,12 @@
-// CreateTask.jsx
 import React, { useState } from "react";
 import axios from "axios";
+const VITE_LOCALHOST_API_URL = import.meta.env.VITE_LOCALHOST_API_URL;
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
-export default function CreateTask({ userId, refreshTasks }) {
+export default function CreateTask({ userId, taskLists, fetchTaskLists }) {
   const [title, setTitle] = useState("");
   const [tasks, setTasks] = useState([""]);
+  const [error, setError] = useState("");
 
   // Function to update a specific task input
   const handleTaskChange = (index, value) => {
@@ -25,21 +27,46 @@ export default function CreateTask({ userId, refreshTasks }) {
   };
 
   const handleSaveTasks = async () => {
+    const emptyTask = tasks.includes("");
+    if (emptyTask) {
+      setError("Emplty string are not allowed!");
+      return;
+    } else {
+      setError("");
+    }
+    const uniqueTasks = new Set(tasks.map((task) => task.trim()));
+    if (uniqueTasks.size !== tasks.length) {
+      setError("Duplicate tasks are not allowed!");
+      return;
+    } else {
+      setError("");
+    }
+
+    const existingTaskLists = taskLists.map((tasks) => tasks.title.trim());
+
+    const titleExist = existingTaskLists.includes(title.trim());
+    if (titleExist) {
+      setError("title same");
+      return;
+    } else {
+      setError("");
+    }
+
     try {
-      // const response = await axios.post("http://localhost:5000/api/tasks", {
       const response = await axios.post(
-        "https://todo-list-backend-production-72ea.up.railway.app/api/tasks",
+        `${VITE_LOCALHOST_API_URL}/api/createTasks`,
+        // `${VITE_API_URL}/api/createTasks`,
         {
           userId,
           title,
-          tasks: tasks.map((task) => ({ task })), // Convert to array of objects
+          tasks: tasks.map((task) => ({ task })),
         }
       );
 
       if (response.status === 200) {
         setTitle("");
         setTasks([""]);
-        if (refreshTasks) refreshTasks();
+        fetchTaskLists();
       }
     } catch (error) {
       console.error("Error saving task:", error);
@@ -72,6 +99,7 @@ export default function CreateTask({ userId, refreshTasks }) {
           )}
         </div>
       ))}
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <br />
       <button onClick={addTask}>Add More Task</button>
       <button onClick={handleSaveTasks}>Save Task</button>
