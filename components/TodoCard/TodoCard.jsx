@@ -44,8 +44,8 @@ export default function TodoCard({ index, taskList, tasklists, setTaskLists }) {
 
     try {
       await axios.put(
-        `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
-        // `${VITE_API_URL}/api/updateTask/${taskList._id}`,
+        // `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
+        `${VITE_API_URL}/api/updateTask/${taskList._id}`,
         {
           title: taskList.title,
           tasks: updatedTasks,
@@ -71,8 +71,8 @@ export default function TodoCard({ index, taskList, tasklists, setTaskLists }) {
 
     try {
       await axios.delete(
-        `${VITE_LOCALHOST_API_URL}/api/deleteTask/${item.task}/${taskList._id}`
-        // `${VITE_API_URL}/api/deleteTask/${item.task}/${taskList._id}`
+        // `${VITE_LOCALHOST_API_URL}/api/deleteTask/${item.task}/${taskList._id}`
+        `${VITE_API_URL}/api/deleteTask/${item.task}/${taskList._id}`
       );
     } catch (error) {
       console.error("Error deleting task:", error);
@@ -89,8 +89,8 @@ export default function TodoCard({ index, taskList, tasklists, setTaskLists }) {
 
     try {
       await axios.delete(
-        `${VITE_LOCALHOST_API_URL}/api/deleteTaskGroup/${task_id}`
-        // `${VITE_API_URL}/api/deleteTaskGroup/${task_id}`
+        // `${VITE_LOCALHOST_API_URL}/api/deleteTaskGroup/${task_id}`
+        `${VITE_API_URL}/api/deleteTaskGroup/${task_id}`
       );
     } catch (error) {
       console.error("Error deleting task:", error);
@@ -149,8 +149,8 @@ export default function TodoCard({ index, taskList, tasklists, setTaskLists }) {
 
     try {
       await axios.put(
-        `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
-        // `${VITE_API_URL}/api/updateTask/${taskList._id}`,
+        // `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
+        `${VITE_API_URL}/api/updateTask/${taskList._id}`,
         {
           title: taskList.title,
           tasks: updatedTasks,
@@ -172,8 +172,8 @@ export default function TodoCard({ index, taskList, tasklists, setTaskLists }) {
 
     try {
       await axios.put(
-        `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
-        // `${VITE_API_URL}/api/updateTask/${taskList._id}`,
+        // `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
+        `${VITE_API_URL}/api/updateTask/${taskList._id}`,
         {
           title: editedTitle,
           tasks: taskList.tasks,
@@ -209,8 +209,8 @@ export default function TodoCard({ index, taskList, tasklists, setTaskLists }) {
 
     try {
       await axios.put(
-        `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
-        // `${VITE_API_URL}/api/updateTask/${taskList._id}`,
+        // `${VITE_LOCALHOST_API_URL}/api/updateTask/${taskList._id}`,
+        `${VITE_API_URL}/api/updateTask/${taskList._id}`,
         {
           title: taskList.title,
           tasks: updatedTasks,

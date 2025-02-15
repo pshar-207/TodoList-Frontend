@@ -29,8 +29,8 @@ const App = () => {
   const fetchTaskLists = async () => {
     try {
       const response = await axios.get(
-        `${VITE_LOCALHOST_API_URL}/api/getAllTasks?userId=${user._id}`
-        // `${VITE_API_URL}/api/getAllTasks?userId=${user._id}`
+        // `${VITE_LOCALHOST_API_URL}/api/getAllTasks?userId=${user._id}`
+        `${VITE_API_URL}/api/getAllTasks?userId=${user._id}`
       );
       setTaskLists(response.data.tasks);
     } catch (error) {

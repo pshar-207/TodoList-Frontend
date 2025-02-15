@@ -10,8 +10,8 @@ const Home = ({ setUser }) => {
     if (firebaseUser) {
       try {
         const response = await axios.post(
-          `${VITE_LOCALHOST_API_URL}/api/createUser`,
-          // `${VITE_API_URL}/api/createUser`,
+          // `${VITE_LOCALHOST_API_URL}/api/createUser`,
+          `${VITE_API_URL}/api/createUser`,
           {
             displayName: firebaseUser.displayName,
             email: firebaseUser.email,
